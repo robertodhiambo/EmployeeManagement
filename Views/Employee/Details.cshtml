@@ -1,0 +1,31 @@
+﻿@model EmployeeManagement.Models.Employee
+
+@{ 
+    ViewData["Title"] = "Employee Details";
+}
+
+    @{
+        var employee = ViewData["Employee"] as EmployeeManagement.Models.Employee;
+    }
+
+<div class=" row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top" src="~/image/noimage.png" />
+                <h4>Employee ID : @Model.Id</h4>
+                <h4>Employee ID : @Model.Name</h4>
+                <h4>Employee ID : @Model.Department</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a class="btn btn-primary" asp-controller="employee" asp-action="index">Back</a>
+                <a class="btn btn-primary" asp-action="edit" asp-controller="employee" asp-route-id="@Model.Id">Edit</a>
+               
+                <a href="#" class="btn btn-primary">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

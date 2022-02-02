@@ -1,0 +1,24 @@
+﻿@model IEnumerable<EmployeeManagement.Models.Employee>
+
+@{ 
+    ViewData["Title"] = "Employee List";
+}
+<div class="card-deck">
+    @foreach (var employee in Model)
+            {
+    <div class="card m-3">
+        <div class="card-header">
+            <h3>@employee.Name</h3>
+        </div>
+        <img class="card-img-top" src="~/image/noimage.png" />
+
+        <div class="card-footer text-center">
+            <a class="btn btn-primary m-1" asp-controller="employee" asp-action="details" asp-route-id="@employee.Id">View</a>
+
+            <a class="btn btn-primary m-1" asp-action="edit" asp-controller="employee" asp-route-id="@employee.Id">Edit</a>
+          
+            <a href="" class="btn btn-danger m-1">Delete</a>
+        </div> 
+    </div>
+            }
+</div>
