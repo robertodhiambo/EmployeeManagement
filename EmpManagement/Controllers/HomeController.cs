@@ -1,4 +1,5 @@
 ﻿using EmpManagement.Models;
+using EmpManagement.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -33,11 +34,19 @@ namespace EmpManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (Employee employee )
+        public IActionResult Create (EmployeeCreateViewModel model )
         {
             if (ModelState.IsValid)
             {
-                Employee newEmployee = _employeeRepository.Add ( employee );
+                Employee newEmployee = new Employee
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Department = model.Department
+                };
+
+                _employeeRepository.Add(newEmployee);
+
                 return RedirectToAction ( "details" , new { id = newEmployee.Id } );
             }
 
