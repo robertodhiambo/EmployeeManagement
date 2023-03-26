@@ -24,7 +24,7 @@
 
         public Employee Delete ( int id )
         {
-            Employee employee = _employeeList.FirstOrDefault( employee=> employee.Id == id );    
+            Employee employee = _employeesList.FirstOrDefault( employee=> employee.Id == id );    
             if ( employee != null )
             {
                 _employeesList.Remove( employee );
@@ -45,7 +45,7 @@
 
         public Employee Update ( Employee employeeChanges )
         {
-            Employee employee = _employeeList.FirstOrDefault(employee=> employee.Id == employeeChanges.Id);
+            Employee employee = _employeesList.FirstOrDefault(employee=> employee.Id == employeeChanges.Id);
             if ( employee != null )
             {
                 employee.Name = employeeChanges.Name;
