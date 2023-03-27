@@ -66,7 +66,24 @@ namespace EmpManagement.Controllers
                 Department = employee.Department
             };
 
-            return View ( employeeEditViewModel );
+            return View ( employeeEditViewModel ); 
+        }
+
+        [HttpPost]
+        public IActionResult Edit( EmployeeEditViewModel viewModel )
+        {
+            if (ModelState.IsValid)
+            {
+                Employee employee = _employeeRepository.GetEmployee(viewModel.Id);
+                employee.Name = viewModel.Name;
+                employee.Email = viewModel.Email;
+                employee.Department = viewModel.Department;
+
+                _employeeRepository.Update(employee);
+                return RedirectToAction ( "Index" );
+            }
+
+            return View ( );
         }
 
     }
