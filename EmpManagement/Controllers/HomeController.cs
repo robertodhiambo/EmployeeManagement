@@ -20,10 +20,17 @@ namespace EmpManagement.Controllers
             return View ( model );
         }
 
-        public ViewResult Details ( int id)
+        public ViewResult Details ( int? id)
         {
-            Employee model = _employeeRepository.GetEmployee(id);
-           
+            Employee employee = _employeeRepository.GetEmployee ( id.Value );
+
+            if (employee == null)
+            {
+                Response.StatusCode = 404;
+                return View ( "EmployeeNotFound", id.Value );
+            }
+
+            Employee model = _employeeRepository.GetEmployee(id ?? 1);
             return View(model);
         }
 
