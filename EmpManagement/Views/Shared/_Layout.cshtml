@@ -28,14 +28,17 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="create">Create</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav m1-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
         </nav>
     </header>
-    </div>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
-            @RenderBody()
+                @RenderBody()
         </main>
     </div>
 
@@ -48,5 +51,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    </div>
 </body>
 </html>
