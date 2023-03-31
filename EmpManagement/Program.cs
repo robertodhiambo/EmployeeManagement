@@ -12,6 +12,11 @@ builder.Services.AddDbContextPool<AppDbContext> ( options =>
 builder.Services.AddIdentity<IdentityUser,  IdentityRole>()
              .AddEntityFrameworkStores<AppDbContext> ();
 
+builder.Services.Configure<IdentityOptions> ( options => {
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = true;
+} );
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
