@@ -1,6 +1,8 @@
 ﻿using EmpManagement.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IO.Enumeration;
 
 namespace EmpManagement.Controllers
 {
@@ -17,12 +19,14 @@ namespace EmpManagement.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register ( )
         {
             return View ( );
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register (RegisterViewModel viewModel )
         {
             if (ModelState.IsValid)
@@ -50,13 +54,15 @@ namespace EmpManagement.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login ( )
         {
             return View ( );
         }
-
+         
         [HttpPost]
-        public async Task<IActionResult> Login (LoginViewModel viewModel )
+        [AllowAnonymous]
+        public async Task<IActionResult> Login (LoginViewModel viewModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -64,13 +70,29 @@ namespace EmpManagement.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");  
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+
+                    else
+                    {
+                        return RedirectToAction ("Index", "Home");
+                    }
+
                 }
 
                 ModelState.AddModelError ( string.Empty , "Invalid Login Attempt" );
             }
 
             return View ( viewModel );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout ( )
+        {
+            await signInManager.SignOutAsync ( );
+            return RedirectToAction("Index", "Home");
         }
     }
 }

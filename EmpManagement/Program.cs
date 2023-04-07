@@ -1,5 +1,7 @@
 using EmpManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +21,13 @@ builder.Services.Configure<IdentityOptions> ( options => {
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddMvc();
+builder.Services.AddMvc(builder =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+                       .RequireAuthenticatedUser()
+                        .Build();
+    builder.Filters.Add(new AuthorizeFilter(policy));
+} );
 builder.Services.AddScoped<IEmployeeRepository , SQLEmployeeRepository> ( );
 
 var app = builder.Build();
@@ -37,9 +45,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication ( );
 
-app.UseAuthentication ();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

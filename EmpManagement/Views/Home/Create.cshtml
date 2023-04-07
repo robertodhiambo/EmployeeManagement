@@ -8,7 +8,7 @@
 
         <form asp-controller="home" asp-action="Create" class="mt-3" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group row">
+            <div class="form-group row mt-2">
                 <label asp-for="Name" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input asp-for="Name" class="form-control" placeholder="Name" />
@@ -16,15 +16,15 @@
                 </div> 
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mt-2">
                 <label asp-for="Email" class="col-sm-2 col-form-label" ></label>
                 <div class="col-sm-10">
                     <input asp-for="Email" class="form-control" placeholder="Email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             </div>
-
-    <div class="form-group row">
+             
+    <div class="form-group row mt-2">
         <label asp-for="Department" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <select class="form-control selectpicker" asp-for="Department" asp-items="@Html.GetEnumSelectList(typeof(Dept))">
@@ -33,7 +33,7 @@
             <span asp-validation-for="Department" class="text-danger"></span>
         </div>
     </div>
-            <div class="form-group-row m-1">
+            <div class="form-group-row mt-2">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
