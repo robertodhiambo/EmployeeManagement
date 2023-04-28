@@ -54,6 +54,24 @@ namespace EmpManagement.Controllers
         }
 
         [HttpGet]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return Json ( true );
+            }
+            
+            else
+            {
+                return Json ( $"Email {email} is already in use" );
+            }
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login ( )
         {
@@ -85,7 +103,7 @@ namespace EmpManagement.Controllers
                 ModelState.AddModelError ( string.Empty , "Invalid Login Attempt" );
             }
 
-            return View ( viewModel );
+            return View ( viewModel ); 
         }
 
         [HttpPost]
