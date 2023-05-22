@@ -30,21 +30,27 @@ namespace EmpManagement.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register (RegisterViewModel viewModel )
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                var user = new ApplicationUser 
+                var user = new ApplicationUser
                 {
-                    UserName = viewModel.Email,
-                    Email = viewModel.Email,
+                    UserName = viewModel.Email ,
+                    Email = viewModel.Email ,
                     City = viewModel.City
                 };
 
-                var result = await userManager.CreateAsync (user, viewModel.Password );
+                var result = await userManager.CreateAsync ( user , viewModel.Password );
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                if ( result.Succeeded )
+                { 
+                    if ( signInManager.IsSignedIn ( User ) && User.IsInRole ( "Admin" ) )
+                    {
+                        return RedirectToAction ( "ListUsers" , "Administration" );
+                    }
+
+                await signInManager.SignInAsync ( user , isPersistent: false );
+                return RedirectToAction ( "Index" , "Home" );
+               }
 
                 foreach (var error in result.Errors)
                 {
@@ -113,6 +119,13 @@ namespace EmpManagement.Controllers
         {
             await signInManager.SignOutAsync ( );
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
